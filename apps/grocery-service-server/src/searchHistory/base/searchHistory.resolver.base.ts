@@ -20,6 +20,7 @@ import { SearchHistoryFindUniqueArgs } from "./SearchHistoryFindUniqueArgs";
 import { CreateSearchHistoryArgs } from "./CreateSearchHistoryArgs";
 import { UpdateSearchHistoryArgs } from "./UpdateSearchHistoryArgs";
 import { DeleteSearchHistoryArgs } from "./DeleteSearchHistoryArgs";
+import { SearchHistoryByBrandDto } from "../SearchHistoryByBrandDto";
 import { SearchHistoryService } from "../searchHistory.service";
 @graphql.Resolver(() => SearchHistory)
 export class SearchHistoryResolverBase {
@@ -95,5 +96,13 @@ export class SearchHistoryResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.Query(() => [SearchHistoryByBrandDto])
+  async GetSearchHistoryByBrand(
+    @graphql.Args()
+    args: SearchHistoryByBrandDto
+  ): Promise<SearchHistoryByBrandDto[]> {
+    return this.service.GetSearchHistoryByBrand(args);
   }
 }

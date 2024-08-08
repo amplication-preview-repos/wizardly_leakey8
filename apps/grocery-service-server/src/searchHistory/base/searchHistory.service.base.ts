@@ -11,6 +11,7 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { PrismaService } from "../../prisma/prisma.service";
 import { Prisma, SearchHistory as PrismaSearchHistory } from "@prisma/client";
+import { SearchHistoryByBrandDto } from "../SearchHistoryByBrandDto";
 
 export class SearchHistoryServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -45,5 +46,10 @@ export class SearchHistoryServiceBase {
     args: Prisma.SearchHistoryDeleteArgs
   ): Promise<PrismaSearchHistory> {
     return this.prisma.searchHistory.delete(args);
+  }
+  async GetSearchHistoryByBrand(
+    args: SearchHistoryByBrandDto
+  ): Promise<SearchHistoryByBrandDto[]> {
+    throw new Error("Not implemented");
   }
 }

@@ -22,6 +22,8 @@ import { Product } from "./Product";
 import { ProductFindManyArgs } from "./ProductFindManyArgs";
 import { ProductWhereUniqueInput } from "./ProductWhereUniqueInput";
 import { ProductUpdateInput } from "./ProductUpdateInput";
+import { UpdateBrandDto } from "../UpdateBrandDto";
+import { SearchProductByNameDto } from "../SearchProductByNameDto";
 
 export class ProductControllerBase {
   constructor(protected readonly service: ProductService) {}
@@ -148,5 +150,39 @@ export class ProductControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Get("/searchByName")
+  @swagger.ApiOkResponse({
+    type: SearchProductByNameDto,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async SearchProductByName(
+    @common.Body()
+    body: UpdateBrandDto
+  ): Promise<SearchProductByNameDto[]> {
+    return this.service.SearchProductByName(body);
+  }
+
+  @common.Patch("/updateBrand")
+  @swagger.ApiOkResponse({
+    type: UpdateBrandDto,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async UpdateProductBrand(
+    @common.Body()
+    body: UpdateBrandDto
+  ): Promise<UpdateBrandDto> {
+    return this.service.UpdateProductBrand(body);
   }
 }

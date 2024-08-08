@@ -22,6 +22,7 @@ import { SearchHistory } from "./SearchHistory";
 import { SearchHistoryFindManyArgs } from "./SearchHistoryFindManyArgs";
 import { SearchHistoryWhereUniqueInput } from "./SearchHistoryWhereUniqueInput";
 import { SearchHistoryUpdateInput } from "./SearchHistoryUpdateInput";
+import { SearchHistoryByBrandDto } from "../SearchHistoryByBrandDto";
 
 export class SearchHistoryControllerBase {
   constructor(protected readonly service: SearchHistoryService) {}
@@ -145,5 +146,22 @@ export class SearchHistoryControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Get("/historyByBrand")
+  @swagger.ApiOkResponse({
+    type: SearchHistoryByBrandDto,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async GetSearchHistoryByBrand(
+    @common.Body()
+    body: SearchHistoryByBrandDto
+  ): Promise<SearchHistoryByBrandDto[]> {
+    return this.service.GetSearchHistoryByBrand(body);
   }
 }

@@ -20,6 +20,8 @@ import { ProductFindUniqueArgs } from "./ProductFindUniqueArgs";
 import { CreateProductArgs } from "./CreateProductArgs";
 import { UpdateProductArgs } from "./UpdateProductArgs";
 import { DeleteProductArgs } from "./DeleteProductArgs";
+import { SearchProductByNameDto } from "../SearchProductByNameDto";
+import { UpdateBrandDto } from "../UpdateBrandDto";
 import { ProductService } from "../product.service";
 @graphql.Resolver(() => Product)
 export class ProductResolverBase {
@@ -95,5 +97,21 @@ export class ProductResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.Query(() => [SearchProductByNameDto])
+  async SearchProductByName(
+    @graphql.Args()
+    args: SearchProductByNameDto
+  ): Promise<SearchProductByNameDto[]> {
+    return this.service.SearchProductByName(args);
+  }
+
+  @graphql.Mutation(() => UpdateBrandDto)
+  async UpdateProductBrand(
+    @graphql.Args()
+    args: UpdateBrandDto
+  ): Promise<UpdateBrandDto> {
+    return this.service.UpdateProductBrand(args);
   }
 }
